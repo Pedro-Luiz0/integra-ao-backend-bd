@@ -1,6 +1,7 @@
 import express from 'express'
 // Importando as funções lógicas do banco de dados (vamos criá-las no passo abaixo)
 import {buscarClientes } from './DAO/cliente/buscar_cliente.js'
+import {buscarProdutos } from './DAO/cliente/buscar_produtos.js'
 
 const app = express()
 
@@ -17,6 +18,15 @@ app.get('/clientes', async (req, res) => {
     }
 });
 
+
+app.get('/produtos', async (req, res) => {
+    try {
+        const produtos = await buscarProdutos();
+        res.json(produtos);
+    } catch (erro) {
+        res.status(500).json({erro: erro.message});
+    }
+});
 
 // 1. CONSULTAR TODOS (GET)
 app.get('/cliente', async (req, res) => {
